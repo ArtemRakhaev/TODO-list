@@ -1,6 +1,22 @@
 // Globals 
+const todoList = document.getElementById('todo-list');
 let todos = [];
 let users = [];
+
+// Basic logic
+function getUserName(userId) {
+	const user = users.find(u => u.id === userId);
+	return user.name;
+}
+
+function printTodo({id, userId, title, complited}) {
+	const li = document.createElement('li');
+	li.className = 'todo-item'
+	li.dataset.id = id;
+	li.innerHTML = `<span>${title} by ${getUserName(userId)}</span>`;
+
+	todoList.prepend(li);
+}
 
 // Attach events
 document.addEventListener('DOMContentLoaded', initApp);
@@ -9,6 +25,8 @@ document.addEventListener('DOMContentLoaded', initApp);
 function initApp() {
 	Promise.all([getAllTodos(), getAllUsers()]).then(values => {
 		[todos, users] = values;
+
+		todos.forEach((todo) => printTodo(todo));
 	})
 }
 
