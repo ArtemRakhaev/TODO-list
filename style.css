@@ -56,7 +56,8 @@ ul {
     color: red;
     cursor: pointer;
     font-weight: bolder;
+		margin-left: auto;
 }
 .close:hover {
-    color:tomato
+    color:tomato;
 }

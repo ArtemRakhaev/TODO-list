@@ -1,5 +1,6 @@
 // Globals 
 const todoList = document.getElementById('todo-list');
+const userSelect = document.getElementById('user-todo');
 let todos = [];
 let users = [];
 
@@ -11,11 +12,31 @@ function getUserName(userId) {
 
 function printTodo({id, userId, title, complited}) {
 	const li = document.createElement('li');
-	li.className = 'todo-item'
+	li.className = 'todo-item';
 	li.dataset.id = id;
-	li.innerHTML = `<span>${title} by ${getUserName(userId)}</span>`;
+	li.innerHTML = `<span>${title} <i>by</i> <b>${getUserName(userId)}</b></span>`;
+
+	// Draws the 
+	const status = document.createElement('input');
+	status.type = 'checkbox';
+	status.checked = complited;
+
+	const close = document.createElement('span');
+	close.innerHTML = '&times';
+	close.className = 'close';
+
+	li.prepend(status);
+	li.append(close);
 
 	todoList.prepend(li);
+}
+
+function createUserOption(user) {
+	const option = document.createElement('option');
+	option.value = user.id;
+	option.innerText = user.name;
+
+	userSelect.append(option);
 }
 
 // Attach events
@@ -27,6 +48,7 @@ function initApp() {
 		[todos, users] = values;
 
 		todos.forEach((todo) => printTodo(todo));
+		users.forEach((user) => createUserOption(user));
 	})
 }
 
