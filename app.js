@@ -10,9 +10,6 @@ let users = [];
 // Basic logic
 function getUserName(userId) {
 	const user = users.find(u => u.id === userId);
-	console.log(userId);
-	console.log(user);
-	console.log(user.name);
 	return user.name;
 }
 
@@ -30,6 +27,7 @@ function printTodo({id, userId, title, completed}) {
 	const close = document.createElement('span');
 	close.innerHTML = '&times';
 	close.className = 'close';
+	close.addEventListener('click', handleClose);
 
 	li.prepend(status);
 	li.append(close);
@@ -75,6 +73,11 @@ function handleTodoChange() {
 	completeTodo(todoId, completed);
 }
 
+function handleClose() {
+	const todoId = this.parentElement.dataset.id;
+	deleteTodo(todoId);
+}
+
 // Async logic
 async function getAllTodos() {
 	const response = await fetch('https://jsonplaceholder.typicode.com/todos');
@@ -116,7 +119,16 @@ async function completeTodo(todoId, completed) {
 			},
 		}
 	);
-	const data  = await response.json();
-	console.log(data);
+}
 
+async function deleteTodo(todoId) {
+	const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todoId}`,
+		{
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+	const data = await response.json();
+	console.log(data);
 }
