@@ -4,7 +4,7 @@
 const todoList = document.getElementById('todo-list');
 const userSelect = document.getElementById('user-todo');
 const form = document.querySelector('form');
-let todos = [];
+let todos = []; // we need 'let', because we`ll filter this array to delete completed todos
 let users = [];
 
 // Basic logic
@@ -41,6 +41,15 @@ function createUserOption(user) {
 	option.innerText = user.name;
 
 	userSelect.append(option);
+}
+
+function removeTodo(todoId) {
+	todos = todos.filter(todo => todo.id !== todoId);
+
+	const todo = todoList.querySelector(`[data-id="${todoId}"]`);
+	todo.querySelector('input').removeEventListener('change', handleTodoChange)
+	todo.querySelector('.close').removeEventListener('click', handleClose);
+	todo.remove();
 }
 
 // Attach events
