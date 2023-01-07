@@ -59,5 +59,8 @@ ul {
 		margin-left: auto;
 }
 .close:hover {
-    color:tomato;
+    color:black;
+}
+.completed {
+    color: grey;
 }
