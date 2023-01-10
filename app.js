@@ -35,6 +35,11 @@
 		li.append(close);
 
 		todoList.prepend(li);
+
+		const liSpan = li.getElementsByTagName('span')[0];
+		if (completed) {
+			liSpan.classList.add('completed');
+		}
 	}
 
 	function createUserOption(user) {
@@ -85,6 +90,11 @@
 	function handleTodoChange() {
 		const todoId = this.parentElement.dataset.id;
 		const completed = this.checked;
+
+		//get a link to the span inside the task whose status is changing
+		const todoSpanCollection = todoList.querySelector(`[data-id="${todoId}"]`).getElementsByTagName('span');
+		const todoSpan = todoSpanCollection[0];
+		todoSpan.classList.toggle('completed');
 
 		completeTodo(todoId, completed);
 	}
